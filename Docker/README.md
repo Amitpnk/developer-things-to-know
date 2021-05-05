@@ -1,19 +1,18 @@
+# Docker
 
-## Docker
+## Installing Docker
 
-### Installing Docker
-
-#### Desktop for windows
+### Desktop for windows
 
 [Install Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/install/)
 
-#### Visual studio extension
+### Visual studio extension
 
 [VS Market place](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
 
 [VS code extension](https://code.visualstudio.com/docs/containers/overview)
 
-### Check status/info of docker
+## Check status/info of docker
 
 ```sh
 docker version
@@ -21,7 +20,7 @@ docker info
 docker --help
 ```
 
-### Download docker image using docker cli
+## Download docker image using docker cli
 
 [For microsoft sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/)
 
@@ -29,7 +28,7 @@ docker --help
 docker pull mcr.microsoft.com/dotnet/sdk:5.0
 ```
 
-### Docker running image in container
+## Docker running image in container
 
 List images 
 
@@ -56,6 +55,6 @@ dotnet
 dotnet --info
 ```
 
-### Reference
+## Reference
 
 [docker cli docs](https://docs.docker.com/engine/reference/commandline/images/)
