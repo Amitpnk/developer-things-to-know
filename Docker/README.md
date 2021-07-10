@@ -7,9 +7,18 @@ Docker commands
 - [Sending Feedback](#sending-feedback)
 - [About Docker](#about-entity-framework-core)
 - [Installing docker](#sample-application-with-each-steps)
-    - [Desktop for windows](#creating-entity-framework-core)
-    - [Visual studio extension](#creating-entity-framework-core)
-    - [Check status/info of docker](#creating-entity-framework-core)
+    - [Desktop for windows](#desktop-for-windows)
+    - [Visual studio extension](#visual-studio-extension)
+    - [Check status/info of docker](#check-statusinfo-of-docker)
+- [Running container locally](#running-container-locally)
+    - [Docker run](#docker-run)
+    - [List containers](#docker-run)
+    - [Docker logs](#docker-run)
+    - [Docker run](#docker-run)
+    - [Docker images downloaded](#docker-images-downloaded)
+    - [Docker Exec](#docker-Exec])
+    - [Storing container data](#storing-container-data)
+    - [Summary](#summary])
 
 ## About docker
 
