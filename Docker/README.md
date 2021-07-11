@@ -19,6 +19,8 @@ Docker commands
     - [Docker Exec](#docker-Exec])
     - [Storing container data](#storing-container-data)
     - [Summary](#summary])
+- [Creating docker images](#)
+    - [Docker run](#docker-run)
 
 ## About docker
 
@@ -48,6 +50,8 @@ docker --help
 Example of running redis container locally 
 
 ### Docker run 
+
+![docker run](../docs/docker/docker-run.png)
 
 Download from image and running redis image locally
 
@@ -200,7 +204,7 @@ docker run -d -p 5432:5432 -v postgres-data:/var/lib/postgresql/data --name post
 
 run in container 
 
-```ps
+```ps1
 docker exec -it postgres2 sh
 # psql -U postgres mydb
 psql (10.5 (Debian 10.5-1.pgdg90+1))
@@ -248,6 +252,113 @@ docker volume rm postgres-data
     * docker rm -f container-name
     * docker image rm image-name
     * docker volume rm volume-name    
+
+## Creating docker images
+
+Dockerfile
+- contains instructions for how to create a Docker image
+
+```dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+WORKDIR /app
+COPY ./out .
+ENTRYPOINT ["dotnet", "samplewebapp.dll"]
+```
+
+or right click project > add docker support from visual studio
+
+### Creating docker files
+
+build docker image from docker file
+
+```sh
+docker build -t samplewebapp .
+```
+
+check for image
+
+```sh
+docker image ls
+```
+
+run container locally and redirect to localhost:8080
+
+```sh
+docker run -d -p 8080:80 --name myapp samplewebapp
+```
+
+to stop
+```sh
+docker rm -f myapp
+```
+
+### Multi stage docker files
+
+incase of specific docker file
+
+```sh
+docker build -t samplewebapp:v2 -f mulit-stage.dockerfile .
+```
+
+### Container registries
+
+```ps1
+# before you begin - make sure you're logged in to the azure CLI
+az login
+
+# ensure you choose the correct azure subscription if you have more than one 
+az account set -s YourSub
+
+# create a resource group
+$resourceGroup = "rg-services-shared-001"
+az group create -n $resourceGroup -l westeurope
+
+# create a new Azure container registry
+# IMPORTANT - use your own name here - it must be unique
+$registryName = "acrnavigatorprod001"
+az acr create -g $resourceGroup -n $registryName --sku Basic
+
+# log in to our container registry
+az acr login -n $registryName
+
+# get the login server name
+$loginServer = az acr show -n $registryName `
+    --query loginServer --output tsv
+# OR: az acr list -g $resourceGroup -q "[].{acrLoginServer:loginServer}" -o table
+
+# see the images we have - should have samplewebapp:v2
+docker image ls
+
+# give it a new tag
+docker tag samplewebapp:v2 $loginServer/samplewebapp:v2
+
+# push the image to our Azure Container Registry
+docker push $loginServer/samplewebapp:v2
+
+# view the images in our ACR
+az acr repository list -n $registryName -o table
+
+# view the tags for the samplewebapp repository
+az acr repository show-tags -n $registryName --repository samplewebapp -o table
+
+# delete a repository from the container registry
+az acr repository delete -n $registryName -t samplewebapp:v2
+
+# to delete everything we made in this demo
+az group delete -n $resourceGroup
+```
+### 
+
+## Various way to run container in azure
+
+![container](../docs/docker/AzureContainer.png)
+
+### Azure Container Instances (ACI)
+
+* The quickest and easiest way to run a container in Azure
+* "Serverless" you don't need to provision infrastructure
+* Pay only while your container is running
+    * Per-second billing model
 
 ## Reference
 
