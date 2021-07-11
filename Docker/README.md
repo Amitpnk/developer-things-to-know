@@ -347,7 +347,23 @@ az acr repository delete -n $registryName -t samplewebapp:v2
 # to delete everything we made in this demo
 az group delete -n $resourceGroup
 ```
-### 
+
+### Summary
+
+* Dockerfile syntax
+    * FROM, WORKINGDIR, COPY, RUN & ENTRYPOINT
+* Multi-stage builds
+* Build docker image
+    * docker build
+* Private container registries
+    * Azure container Registry
+* Azure CLI
+    * az acr create
+    * az acr login
+    * docker tag
+    * docker push
+    
+
 
 ## Various way to run container in azure
 
